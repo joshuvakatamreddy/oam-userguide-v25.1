@@ -193,8 +193,9 @@ body{
   transition:left var(--transition);font-weight:500;
 }
 .breadcrumb-sep{color:var(--text-muted);opacity:.6}
-.breadcrumb #crumbSection{color:var(--text-secondary)}
-.breadcrumb #crumbTopic{color:var(--text-heading);font-weight:600}
+.breadcrumb .crumb-link{color:var(--text-secondary);text-decoration:none;cursor:pointer;transition:color .15s}
+.breadcrumb .crumb-link:hover{color:var(--accent);text-decoration:underline}
+.breadcrumb #crumbTopic,.breadcrumb .crumb-current{color:var(--text-heading);font-weight:600}
 
 /* ================= SIDEBAR ================= */
 .sidebar{
