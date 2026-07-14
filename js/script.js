@@ -75,7 +75,9 @@ function showTopic(id,anchor){
       ${prev?`<a class="topic-nav-btn" data-go="${prev.id}"><div class="topic-nav-label">← Previous</div><div class="topic-nav-title">${esc(prev.label)}</div></a>`:'<span class="topic-nav-btn" disabled></span>'}
       ${next?`<a class="topic-nav-btn next" data-go="${next.id}"><div class="topic-nav-label">Next →</div><div class="topic-nav-title">${esc(next.label)}</div></a>`:'<span class="topic-nav-btn next" disabled></span>'}
     </nav>`;
-  document.getElementById('crumbSection').textContent=t.section;
+  const secEl=document.getElementById('crumbSection');
+  secEl.textContent=t.section;
+  secEl.dataset.section=t.section;
   document.getElementById('crumbTopic').textContent=t.topic;
   // active in sidebar + expand group + expand topic subs
   document.querySelectorAll('.nav-topic').forEach(el=>el.classList.toggle('active',el.dataset.topic===id));
@@ -132,6 +134,12 @@ function init(){
     if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();input.focus();}
     if(e.key==='Escape'){document.getElementById('searchDropdown').classList.remove('active');input.blur();}
     if(e.altKey&&e.key.toLowerCase()==='b')document.getElementById('sidebarToggle').click();
+  });
+  document.getElementById('crumbHome').addEventListener('click',e=>{e.preventDefault();showTopic(DATA.home);});
+  document.getElementById('crumbSection').addEventListener('click',e=>{
+    e.preventDefault();
+    const sec=e.currentTarget.dataset.section;
+    for(const g of NAV){ const first=g.children.find(c=>CONTENT[c.id]&&CONTENT[c.id].section===sec); if(first){ showTopic(first.id); return; } }
   });
   renderBookmarks();
   const h=location.hash.slice(1).split('/');
